@@ -20,7 +20,12 @@
       "version": "1.3.0",
       "buildDate": "2025-10-19T10:19:26.849Z",
       "module": "1.3.0/xcratchExample.mjs"
+    },
+    {
+      "version": "1.0.1",
+      "buildDate": "2026-09-19T16:19:53.451Z",
+      "module": "1.0.1/MyFirstExtention.mjs"
     }
   ],
-  "latest": "1.5.0"
+  "latest": "1.0.1"
 }
