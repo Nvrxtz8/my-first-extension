@@ -1,0 +1,14 @@
+{
+  "en": {
+    "MyFirstExtention.entry.name": "My First Extension",
+    "MyFirstExtention.entry.description": "Do it in JavaScript"
+  },
+  "ja": {
+    "MyFirstExtention.entry.name": "マイファースト拡張",
+    "MyFirstExtention.entry.description": "JavaScriptを実行する"
+  },
+  "ja-Hira": {
+    "MyFirstExtention.entry.name": "まいふぁーすとかくちょう",
+    "MyFirstExtention.entry.description": "ジャバスクリプトをじっこうする"
+  }
+}

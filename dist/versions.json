@@ -1,0 +1,11 @@
+{
+  "extensionId": "MyFirstExtention",
+  "versions": [
+    {
+      "version": "1.0.2",
+      "buildDate": "2026-09-19T16:22:20.380Z",
+      "module": "1.0.2/MyFirstExtention.mjs"
+    }
+  ],
+  "latest": "1.0.2"
+}
