@@ -1,14 +1,17 @@
 {
   "en": {
     "MyFirstExtention.name": "My First Extension",
-    "MyFirstExtention.doIt": "do it [SCRIPT]"
+    "MyFirstExtention.doIt": "do it [SCRIPT]",
+    "MyFirstExtention.drawGraph": "draw graph [FORMULA] from [START] to [END]"
   },
   "ja": {
     "MyFirstExtention.name": "マイファースト拡張",
-    "MyFirstExtention.doIt": "[SCRIPT] を実行する"
+    "MyFirstExtention.doIt": "[SCRIPT] を実行する",
+    "MyFirstExtention.drawGraph": "グラフ [FORMULA] を [START] から [END] まで描く"
   },
   "ja-Hira": {
     "MyFirstExtention.name": "まいふぁーすとかくちょう",
-    "MyFirstExtention.doIt": "[SCRIPT] をじっこうする"
+    "MyFirstExtention.doIt": "[SCRIPT] をじっこうする",
+    "MyFirstExtention.drawGraph": "ぐらふ [FORMULA] を [START] から [END] までえがく"
   }
 }

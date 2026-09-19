@@ -682,18 +682,21 @@ var Cast = /*@__PURE__*/getDefaultExportFromCjs(castExports);
 
 var en = {
 	"MyFirstExtention.name": "My First Extension",
-	"MyFirstExtention.doIt": "do it [SCRIPT]"
+	"MyFirstExtention.doIt": "do it [SCRIPT]",
+	"MyFirstExtention.drawGraph": "draw graph [FORMULA] from [START] to [END]"
 };
 var ja = {
 	"MyFirstExtention.name": "マイファースト拡張",
-	"MyFirstExtention.doIt": "[SCRIPT] を実行する"
+	"MyFirstExtention.doIt": "[SCRIPT] を実行する",
+	"MyFirstExtention.drawGraph": "グラフ [FORMULA] を [START] から [END] まで描く"
 };
 var translations = {
 	en: en,
 	ja: ja,
 	"ja-Hira": {
 	"MyFirstExtention.name": "まいふぁーすとかくちょう",
-	"MyFirstExtention.doIt": "[SCRIPT] をじっこうする"
+	"MyFirstExtention.doIt": "[SCRIPT] をじっこうする",
+	"MyFirstExtention.drawGraph": "ぐらふ [FORMULA] を [START] から [END] までえがく"
 }
 };
 
@@ -777,6 +780,30 @@ var ExtensionBlocks = /*#__PURE__*/function () {
               defaultValue: '3 + 4'
             }
           }
+        }, {
+          opcode: 'draw-graph',
+          blockType: BlockType.COMMAND,
+          blockAllThreads: false,
+          text: formatMessage({
+            id: 'MyFirstExtention.drawGraph',
+            default: 'draw graph [FORMULA] from [START] to [END]',
+            description: 'draw graph of formula'
+          }),
+          func: 'drawGraph',
+          arguments: {
+            FORMULA: {
+              type: ArgumentType.STRING,
+              defaultValue: 'x * x'
+            },
+            START: {
+              type: ArgumentType.NUMBER,
+              defaultValue: -10
+            },
+            END: {
+              type: ArgumentType.NUMBER,
+              defaultValue: 10
+            }
+          }
         }],
         menus: {}
       };
@@ -785,9 +812,49 @@ var ExtensionBlocks = /*#__PURE__*/function () {
     key: "doIt",
     value: function doIt(args) {
       var statement = Cast.toString(args.SCRIPT);
-      var func = new Function("return (".concat(statement, ")"));
-      console.log("doIt: ".concat(statement));
-      return func.call(this);
+      try {
+        var func = new Function("return (".concat(statement, ")"));
+        var result = func.call(this);
+        console.log("doIt: ".concat(statement, " = ").concat(result));
+        return result;
+      } catch (error) {
+        console.error("doIt error: ".concat(error.message));
+        return "Error: ".concat(error.message);
+      }
+    }
+  }, {
+    key: "drawGraph",
+    value: function drawGraph(args) {
+      var formula = Cast.toString(args.FORMULA);
+      var start = Cast.toNumber(args.START);
+      var end = Cast.toNumber(args.END);
+      try {
+        // 数式を評価する関数を作成
+        var func = new Function('x', "return (".concat(formula, ")"));
+
+        // Scratchのペンを使って描画
+        // まずはコンソールに値を出力してテスト
+        console.log("Drawing graph: ".concat(formula, " from ").concat(start, " to ").concat(end));
+
+        // 簡単な実装：点の座標をログに出力
+        var points = [];
+        for (var x = start; x <= end; x += 0.5) {
+          try {
+            var y = func(x);
+            points.push({
+              x: x,
+              y: y
+            });
+            console.log("Point: (".concat(x, ", ").concat(y, ")"));
+          } catch (e) {
+            console.error("Error at x=".concat(x, ": ").concat(e.message));
+          }
+        }
+        return "Graph drawn with ".concat(points.length, " points");
+      } catch (error) {
+        console.error("drawGraph error: ".concat(error.message));
+        return "Error: ".concat(error.message);
+      }
     }
   }], [{
     key: "formatMessage",

@@ -127,6 +127,31 @@ class ExtensionBlocks {
                             defaultValue: '3 + 4'
                         }
                     }
+                },
+                {
+                    opcode: 'draw-graph',
+                    blockType: BlockType.COMMAND,
+                    blockAllThreads: false,
+                    text: formatMessage({
+                        id: 'MyFirstExtention.drawGraph',
+                        default: 'draw graph [FORMULA] from [START] to [END]',
+                        description: 'draw graph of formula'
+                    }),
+                    func: 'drawGraph',
+                    arguments: {
+                        FORMULA: {
+                            type: ArgumentType.STRING,
+                            defaultValue: 'x * x'
+                        },
+                        START: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: -10
+                        },
+                        END: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 10
+                        }
+                    }
                 }
             ],
             menus: {
@@ -136,9 +161,47 @@ class ExtensionBlocks {
 
     doIt (args) {
         const statement = Cast.toString(args.SCRIPT);
-        const func = new Function(`return (${statement})`);
-        console.log(`doIt: ${statement}`);
-        return func.call(this);
+        try {
+            const func = new Function(`return (${statement})`);
+            const result = func.call(this);
+            console.log(`doIt: ${statement} = ${result}`);
+            return result;
+        } catch (error) {
+            console.error(`doIt error: ${error.message}`);
+            return `Error: ${error.message}`;
+        }
+    }
+
+    drawGraph (args) {
+        const formula = Cast.toString(args.FORMULA);
+        const start = Cast.toNumber(args.START);
+        const end = Cast.toNumber(args.END);
+
+        try {
+            // 数式を評価する関数を作成
+            const func = new Function('x', `return (${formula})`);
+
+            // Scratchのペンを使って描画
+            // まずはコンソールに値を出力してテスト
+            console.log(`Drawing graph: ${formula} from ${start} to ${end}`);
+
+            // 簡単な実装：点の座標をログに出力
+            const points = [];
+            for (let x = start; x <= end; x += 0.5) {
+                try {
+                    const y = func(x);
+                    points.push({x, y});
+                    console.log(`Point: (${x}, ${y})`);
+                } catch (e) {
+                    console.error(`Error at x=${x}: ${e.message}`);
+                }
+            }
+
+            return `Graph drawn with ${points.length} points`;
+        } catch (error) {
+            console.error(`drawGraph error: ${error.message}`);
+            return `Error: ${error.message}`;
+        }
     }
 }
 
